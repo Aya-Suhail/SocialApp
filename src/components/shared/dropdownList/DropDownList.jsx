@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { MdDeleteSweep } from "react-icons/md";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { MdMoreVert } from 'react-icons/md';
-import { LuFileEdit } from 'react-icons/lu';
+// import { LuFileEdit } from 'react-icons/lu';
 
 const DropDownList = (postId) => {
   const {token} =useContext(authContext)
@@ -50,7 +50,7 @@ let {mutate}= useMutation({
             <Dropdown.Item id="edite" textValue="Edite">
               <Label>Edite</Label>
               <Kbd className="ms-auto" slot="keyboard" variant="light">
-                <Kbd.Content><LuFileEdit/></Kbd.Content>
+                <Kbd.Content></Kbd.Content>
               </Kbd>
             </Dropdown.Item>
           </Dropdown.Menu>

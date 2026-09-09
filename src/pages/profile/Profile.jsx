@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { authContext } from "../../context/authcontext";
 import Loading from "../../components/shared/loading/Loading";
 import CreatePost from "../../components/shared/craetePost/CreatePost";
+import PostCard from "../../components/shared/postCard/PostCard";
 
 
 const Profile = () => {
@@ -62,7 +63,7 @@ let {data,isError,isLoading} =  useQuery({
             <img src={userData?.photo} alt="" className="w-40 border-4 border-white rounded-full" />
             <div className="flex items-center space-x-2 mt-2">
               <p className="text-2xl">{userData?.name}</p>
-              <span className="bg-blue-500 rounded-full p-1" title="Verified">
+              <span className="bg-blue-500 rounded-full" title="Verified">
                 <svg>
                   <path
                     strokeLinecap="round"
@@ -79,8 +80,8 @@ let {data,isError,isLoading} =  useQuery({
       </div>
       {/* user posts */}
 <CreatePost/>
-{data.map((post)=>{
-  return <postCard {...post} singleDetails={false}/>
+{data?.map((post)=>{
+  return <PostCard {...post} singleDetails={false}/>
  
 })}
 </div>
