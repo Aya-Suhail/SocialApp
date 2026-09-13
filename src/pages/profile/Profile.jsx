@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { userContext } from "../../context/userContext";
 import axios from "axios";
 import { baseUrl } from "../../const/env";
+import imgCover from '../../assets/cover.webp';
 import { useQuery } from "@tanstack/react-query";
 import { authContext } from "../../context/authcontext";
 import Loading from "../../components/shared/loading/Loading";
@@ -43,13 +44,16 @@ let {data,isError,isLoading} =  useQuery({
 
   return (
     <>
+    <Helmet>
+         <title>Profile</title>
+      </Helmet>
     <div className="bg-gray-200 ">
     {/* headers */}
       <div className="h-full p-8">
         <div className="bg-white rounded-lg shadow-xl pb-8">
-          <div className="w-full h-62.5">
+          <div className="w-full h-70">
             {userData?.cover =='' ? 
-             <img src={userData?.imgCover} className="w-full h-full rounded-tl-lg rounded-tr-lg"/> 
+             <img src={imgCover} className="w-full h-full rounded-tl-lg rounded-tr-lg"/> 
             :
             <img
               src={userData?.cover}
@@ -63,8 +67,8 @@ let {data,isError,isLoading} =  useQuery({
             <img src={userData?.photo} alt="" className="w-40 border-4 border-white rounded-full" />
             <div className="flex items-center space-x-2 mt-2">
               <p className="text-2xl">{userData?.name}</p>
-              <span className="bg-blue-500 rounded-full" title="Verified">
-                <svg>
+              <span className="bg-blue-500 rounded-full p-1" title="Verified">
+                <svg xmlns="http://www.w3.org/2000/svg" className="text-gray-100 h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"

@@ -13,8 +13,9 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const CreateComment = ({ postId }) => {
   const [imgFile, setFile] = useState(null);
+  const inputFile = useRef(null);
 
-    let auth = useContext(authContext);
+  let auth = useContext(authContext);
 
   if (!auth) {
     throw new Error("there is error");
@@ -22,43 +23,14 @@ const CreateComment = ({ postId }) => {
 
   let { token } = auth;
   const {userData} = useContext(userContext)
-  const { register, handleSubmit,reset:resetForm } = useForm({
+
+  const { register, handleSubmit,reset } = useForm({
     defaultValues: {
       content: "",
     },
   });
 
-  const inputFile = useRef(null);
-
-  function getImageFile(e) {
-    setFile(e.target.files?.[0] || null);
-  }
-  function createPostComment(commentData) {
-    axios.post(`${baseUrl}/posts/${postId}/comments`, commentData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  }
-
-  const query = useQueryClient()
-  let { isPending, mutate } = useMutation({
-    mutationFn: createPostComment,
-    onSuccess: (res) => {
-      resetForm()
-      console.log("success", res.data?.message);
-      toast.success(res.data?.message);
-      query.invalidateQueries({queryKey:['allposts']}),
-      query.invalidateQueries({queryKey:['profilePost',userData?._id]}),
-      query.invalidateQueries({queryKey:['allComments']})
-
-    }, 
-    onError: (err) => {
-      toast.error(err?.data?.message || "there is an error");
-    },
-  });
-
-  function sendData(data) {
+    function sendData(data) {
     // console.log(data);
 
     if (!data.content && !imgFile) return;
@@ -74,6 +46,39 @@ const CreateComment = ({ postId }) => {
     mutate(fd);
   }
 
+
+
+  async function createPostComment(fd) {
+  let {data} = await  axios.post(`${baseUrl}/posts/${postId}/comments`, fd, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+        return data.data
+
+  }
+
+  const query = useQueryClient()
+  let { isPending, mutate } = useMutation({
+    mutationFn: createPostComment,
+    onSuccess: (res) => {
+      reset()
+      setFile(null)
+      toast.success(res.data?.message);
+      query.invalidateQueries({queryKey:['allposts']}),
+      query.invalidateQueries({queryKey:['profilePost',userData?._id]}),
+      query.invalidateQueries({queryKey:['allComments']})
+
+    }, 
+    onError: (err) => {
+      toast.error(err?.data?.message || "there is an error");
+    },
+  });
+
+  function getImageFile(e) {
+    setFile(e.target.files?.[0] )
+  }
+
   return (
     <form onSubmit={handleSubmit(sendData)}>
       <div className="flex items-center gap-x-1">
@@ -84,13 +89,14 @@ const CreateComment = ({ postId }) => {
           placeholder="Enter your comment ..."
           {...register("content")}
         />
+        
+        <Input onChange={getImageFile} ref={inputFile} type="file" hidden />
         <IoIosImages
           onClick={() => inputFile.current?.click()}
-          size={30}
-          className="text-sky-800 cursor-pointer"
+          size={25}
+         className="text-sky-700"
         />
-        <Input onChange={getImageFile} ref={inputFile} type="file" hidden />
-        <Button type="submit">
+        <Button type="submit" className='bg-transparent'>
           {isPending ?
           <AiOutlineLoading3Quarters size={30} className="text-sky-700" animate-spin/>
             :     
@@ -105,4 +111,4 @@ const CreateComment = ({ postId }) => {
 
 export default CreateComment;
 
-// npm i react-icons
+

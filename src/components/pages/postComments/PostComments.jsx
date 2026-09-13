@@ -29,7 +29,7 @@ const PostComments = (postDetails) => {
 
   let {data}= useQuery({
   queryFn:getPostComment,
-  queryKey:['allComments'],
+  queryKey:['postcomment'],
   select:(data)=>data.data.data.comments
 
 })

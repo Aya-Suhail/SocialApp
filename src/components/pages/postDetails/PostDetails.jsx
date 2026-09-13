@@ -11,7 +11,7 @@ import PostComments from "../postComments/PostComments";
 const PostDetails = () => {
 
 let {Id} =  useParams()
-  let auth = useContext(authContext);
+let auth = useContext(authContext);
 
   if (!auth) {
     throw new Error("there is error");
