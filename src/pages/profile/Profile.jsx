@@ -8,6 +8,7 @@ import { authContext } from "../../context/authcontext";
 import Loading from "../../components/shared/loading/Loading";
 import CreatePost from "../../components/shared/craetePost/CreatePost";
 import PostCard from "../../components/shared/postCard/PostCard";
+import { Helmet } from "react-helmet-async";
 
 
 const Profile = () => {
