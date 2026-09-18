@@ -98,7 +98,7 @@ const CreateComment = ({ postId }) => {
         />
         <Button type="submit" className='bg-transparent'>
           {isPending ?
-          <AiOutlineLoading3Quarters size={30} className="text-sky-700" animate-spin/>
+          <AiOutlineLoading3Quarters size={30} className="text-sky-700 animate-spin" />
             :     
            <LuSend size={30} className="text-sky-700" />     
         }
