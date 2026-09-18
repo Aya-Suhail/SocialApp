@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 
-const AuthProtected = (children) => {
+const AuthProtected = ({children}) => {
     if(localStorage.getItem('token')==null){
       return children
     }else{
